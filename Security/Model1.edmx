@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище MaskFactoryModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="id_employee" />
+          </Key>
+          <Property Name="id_employee" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="surname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="balance" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lateness">
+          <Key>
+            <PropertyRef Name="id_lateness" />
+          </Key>
+          <Property Name="id_lateness" Type="int" Nullable="false" />
+          <Property Name="id_login" Type="int" Nullable="false" />
+          <Property Name="id_penalty" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="logins">
+          <Key>
+            <PropertyRef Name="id_login" />
+          </Key>
+          <Property Name="id_login" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="login_time" Type="time" Precision="7" Nullable="false" />
+          <Property Name="id_employee" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="penalty">
+          <Key>
+            <PropertyRef Name="id_penalty" />
+          </Key>
+          <Property Name="id_penalty" Type="int" Nullable="false" />
+          <Property Name="penalty_time" Type="int" Nullable="false" />
+          <Property Name="penalty_cost" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_lateness_logins">
+          <End Role="logins" Type="Self.logins" Multiplicity="1" />
+          <End Role="lateness" Type="Self.lateness" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="logins">
+              <PropertyRef Name="id_login" />
+            </Principal>
+            <Dependent Role="lateness">
+              <PropertyRef Name="id_login" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_lateness_penalty">
+          <End Role="penalty" Type="Self.penalty" Multiplicity="1" />
+          <End Role="lateness" Type="Self.lateness" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="penalty">
+              <PropertyRef Name="id_penalty" />
+            </Principal>
+            <Dependent Role="lateness">
+              <PropertyRef Name="id_penalty" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище MaskFactoryModelContainer">
+          <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lateness" EntityType="Self.lateness" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="logins" EntityType="Self.logins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="penalty" EntityType="Self.penalty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_lateness_logins" Association="Self.FK_lateness_logins">
+            <End Role="logins" EntitySet="logins" />
+            <End Role="lateness" EntitySet="lateness" />
+          </AssociationSet>
+          <AssociationSet Name="FK_lateness_penalty" Association="Self.FK_lateness_penalty">
+            <End Role="penalty" EntitySet="penalty" />
+            <End Role="lateness" EntitySet="lateness" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MaskFactoryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="id_employee" />
+          </Key>
+          <Property Name="id_employee" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="surname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="balance" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lateness">
+          <Key>
+            <PropertyRef Name="id_lateness" />
+          </Key>
+          <Property Name="id_lateness" Type="Int32" Nullable="false" />
+          <Property Name="id_login" Type="Int32" Nullable="false" />
+          <Property Name="id_penalty" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="logins" Relationship="Self.FK_lateness_logins" FromRole="lateness" ToRole="logins" />
+          <NavigationProperty Name="penalty" Relationship="Self.FK_lateness_penalty" FromRole="lateness" ToRole="penalty" />
+        </EntityType>
+        <EntityType Name="logins">
+          <Key>
+            <PropertyRef Name="id_login" />
+          </Key>
+          <Property Name="id_login" Type="Int32" Nullable="false" />
+          <Property Name="login_time" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="id_employee" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="lateness" Relationship="Self.FK_lateness_logins" FromRole="logins" ToRole="lateness" />
+        </EntityType>
+        <EntityType Name="penalty">
+          <Key>
+            <PropertyRef Name="id_penalty" />
+          </Key>
+          <Property Name="id_penalty" Type="Int32" Nullable="false" />
+          <Property Name="penalty_time" Type="Int32" Nullable="false" />
+          <Property Name="penalty_cost" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="lateness" Relationship="Self.FK_lateness_penalty" FromRole="penalty" ToRole="lateness" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_lateness_logins">
+          <End Role="logins" Type="Self.logins" Multiplicity="1" />
+          <End Role="lateness" Type="Self.lateness" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="logins">
+              <PropertyRef Name="id_login" />
+            </Principal>
+            <Dependent Role="lateness">
+              <PropertyRef Name="id_login" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_lateness_penalty">
+          <End Role="penalty" Type="Self.penalty" Multiplicity="1" />
+          <End Role="lateness" Type="Self.lateness" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="penalty">
+              <PropertyRef Name="id_penalty" />
+            </Principal>
+            <Dependent Role="lateness">
+              <PropertyRef Name="id_penalty" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MaskFactoryEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="employee" EntityType="Self.employee" />
+          <EntitySet Name="lateness" EntityType="Self.lateness" />
+          <EntitySet Name="logins" EntityType="Self.logins" />
+          <EntitySet Name="penalty" EntityType="Self.penalty" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="FK_lateness_logins" Association="Self.FK_lateness_logins">
+            <End Role="logins" EntitySet="logins" />
+            <End Role="lateness" EntitySet="lateness" />
+          </AssociationSet>
+          <AssociationSet Name="FK_lateness_penalty" Association="Self.FK_lateness_penalty">
+            <End Role="penalty" EntitySet="penalty" />
+            <End Role="lateness" EntitySet="lateness" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище MaskFactoryModelContainer" CdmEntityContainer="MaskFactoryEntities">
+          <EntitySetMapping Name="employee">
+            <EntityTypeMapping TypeName="MaskFactoryModel.employee">
+              <MappingFragment StoreEntitySet="employee">
+                <ScalarProperty Name="id_employee" ColumnName="id_employee" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="balance" ColumnName="balance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lateness">
+            <EntityTypeMapping TypeName="MaskFactoryModel.lateness">
+              <MappingFragment StoreEntitySet="lateness">
+                <ScalarProperty Name="id_lateness" ColumnName="id_lateness" />
+                <ScalarProperty Name="id_login" ColumnName="id_login" />
+                <ScalarProperty Name="id_penalty" ColumnName="id_penalty" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="logins">
+            <EntityTypeMapping TypeName="MaskFactoryModel.logins">
+              <MappingFragment StoreEntitySet="logins">
+                <ScalarProperty Name="id_login" ColumnName="id_login" />
+                <ScalarProperty Name="login_time" ColumnName="login_time" />
+                <ScalarProperty Name="id_employee" ColumnName="id_employee" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="penalty">
+            <EntityTypeMapping TypeName="MaskFactoryModel.penalty">
+              <MappingFragment StoreEntitySet="penalty">
+                <ScalarProperty Name="id_penalty" ColumnName="id_penalty" />
+                <ScalarProperty Name="penalty_time" ColumnName="penalty_time" />
+                <ScalarProperty Name="penalty_cost" ColumnName="penalty_cost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="MaskFactoryModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
