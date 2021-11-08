@@ -21,7 +21,7 @@ namespace Security
         }
     
         public int id_penalty { get; set; }
-        public int penalty_time { get; set; }
+        public System.TimeSpan penalty_time { get; set; }
         public int penalty_cost { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

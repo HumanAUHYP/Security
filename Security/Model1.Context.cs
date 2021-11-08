@@ -27,7 +27,6 @@ namespace Security
     
         public virtual DbSet<employee> employee { get; set; }
         public virtual DbSet<lateness> lateness { get; set; }
-        public virtual DbSet<logins> logins { get; set; }
         public virtual DbSet<penalty> penalty { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }

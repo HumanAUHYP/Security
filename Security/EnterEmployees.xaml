@@ -21,7 +21,7 @@
         <ListView x:Name="non_come"  Grid.Column="0" Grid.Row="1" FontSize="40" ItemsSource="{Binding employee}" SelectionChanged="ListView_SelectionChanged">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="3"/>
+                    <UniformGrid Columns="1"/>
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
             <ListView.ItemTemplate>

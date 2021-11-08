@@ -15,10 +15,11 @@ namespace Security
     public partial class lateness
     {
         public int id_lateness { get; set; }
-        public int id_login { get; set; }
+        public System.TimeSpan login_time { get; set; }
         public int id_penalty { get; set; }
+        public int id_employee { get; set; }
     
-        public virtual logins logins { get; set; }
+        public virtual employee employee { get; set; }
         public virtual penalty penalty { get; set; }
     }
 }
