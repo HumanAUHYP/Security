@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
 
         <TextBlock Text="Непришедшие челы" FontSize="40"/>
-        <ListView x:Name="non_come"  Grid.Column="0" Grid.Row="1" FontSize="40" ItemsSource="{Binding employee}" SelectionChanged="ListView_SelectionChanged">
+        <ListView x:Name="non_come"  Grid.Column="0" Grid.Row="1" FontSize="40" ItemsSource="{Binding employee}" SelectionChanged="non_come_SelectionChanged">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="1"/>
@@ -34,8 +34,21 @@
         </ListView>
         <Button x:Name="btn_write" Grid.Column="0" Grid.Row="2" Content="Записать" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btn_write_Click"/>
 
-        <TextBlock Grid.Column="1" Grid.Row="0" Text="Опаздавшие челы" FontSize="40"/>
-        <ListView Grid.Column="1" Grid.Row="1" FontSize="40"/>
-        <Button x:Name="btn_penalty" Grid.Column="2" Grid.Row="2" Content="Оштрафовать" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="1" Grid.Row="0" Text="Опаздавшие челы" FontSize="40" HorizontalAlignment="Right"/>
+        <ListView x:Name="lateness"  Grid.Column="1" Grid.Row="1" FontSize="40" ItemsSource="{Binding latenesss}" SelectionChanged="lateness_SelectionChanged">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="1"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button x:Name="btn_penalty" Grid.Column="2" Grid.Row="2" Content="Оштрафовать" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btn_penalty_Click"/>
     </Grid>
 </Window>

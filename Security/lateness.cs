@@ -18,6 +18,8 @@ namespace Security
         public System.TimeSpan login_time { get; set; }
         public int id_penalty { get; set; }
         public int id_employee { get; set; }
+        public string name { get; set; }
+        public bool paid { get; set; }
     
         public virtual employee employee { get; set; }
         public virtual penalty penalty { get; set; }

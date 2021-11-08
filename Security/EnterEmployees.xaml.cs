@@ -21,8 +21,10 @@ namespace Security
     public partial class EnterEmployees : Window
     {
         public static ObservableCollection<employee> employee { get; set; }
-        public static ObservableCollection<lateness> lateness { get; set; }
+        public static ObservableCollection<lateness> latenesss { get; set; }
         public static ObservableCollection<penalty> penalty { get; set; }
+
+        string emp_name { get; set; }
         int employee_id { get; set; }
         int penalty_id { get; set; }
         public EnterEmployees()
@@ -31,7 +33,7 @@ namespace Security
             employee = new ObservableCollection<employee>(db_connection.connection.employee.Where(a => a.came == false));
             this.DataContext = this;
 
-            lateness = new ObservableCollection<lateness>(db_connection.connection.lateness.ToList());
+            latenesss = new ObservableCollection<lateness>(db_connection.connection.lateness.Where(a => a.paid == false));
             penalty = new ObservableCollection<penalty>(db_connection.connection.penalty.ToList());
         }
         private void btn_write_Click(object sender, RoutedEventArgs e)
@@ -42,7 +44,8 @@ namespace Security
                 
                 save.login_time = DateTime.Now.TimeOfDay;
                 save.id_employee = employee_id;
-                var late = save.login_time - DateTime.Parse("13:00:00").TimeOfDay;
+                save.name = emp_name;
+                var late = save.login_time - DateTime.Parse("8:00:00").TimeOfDay;
                 MessageBox.Show($"Опаздал на {late}");
                 
                 foreach (var el in penalty)
@@ -70,10 +73,40 @@ namespace Security
             }
         }
 
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void non_come_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var a = (sender as ListView).SelectedItem as employee;
             employee_id = a.id_employee;
+            emp_name = a.name;
+        }
+
+        private void lateness_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var a = (sender as ListView).SelectedItem as lateness;
+            employee_id = a.id_employee;
+        }
+
+        private void btn_penalty_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                employee = new ObservableCollection<employee>(db_connection.connection.employee.Where(a => a.came == true));
+                var late = latenesss.Where(a => a.id_employee == employee_id).FirstOrDefault();
+                var fine = penalty.Where(a => a.id_penalty == late.id_penalty).FirstOrDefault();
+                var emp = employee.Where(a => a.id_employee == late.id_employee).FirstOrDefault();
+                emp.balance -= fine.penalty_cost;
+                late.paid = true;
+                db_connection.connection.SaveChanges();
+                MessageBox.Show($"{emp.name} проштрафился на {fine.penalty_cost} рублей");
+
+                EnterEmployees enterEmployees = new EnterEmployees();
+                enterEmployees.Show();
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка {ex}", "error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

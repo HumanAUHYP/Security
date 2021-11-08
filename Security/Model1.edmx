@@ -23,6 +23,8 @@
           <Property Name="login_time" Type="time" Precision="0" Nullable="false" />
           <Property Name="id_penalty" Type="int" Nullable="false" />
           <Property Name="id_employee" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="paid" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="penalty">
           <Key>
@@ -119,6 +121,8 @@
           <Property Name="id_employee" Type="Int32" Nullable="false" />
           <NavigationProperty Name="employee" Relationship="MaskFactoryModel.FK_lateness_employee" FromRole="lateness" ToRole="employee" />
           <NavigationProperty Name="penalty" Relationship="MaskFactoryModel.FK_lateness_penalty" FromRole="lateness" ToRole="penalty" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="paid" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="penalty">
           <Key>
@@ -183,6 +187,8 @@
           <EntitySetMapping Name="lateness">
             <EntityTypeMapping TypeName="MaskFactoryModel.lateness">
               <MappingFragment StoreEntitySet="lateness">
+                <ScalarProperty Name="paid" ColumnName="paid" />
+                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id_employee" ColumnName="id_employee" />
                 <ScalarProperty Name="id_penalty" ColumnName="id_penalty" />
                 <ScalarProperty Name="login_time" ColumnName="login_time" />
