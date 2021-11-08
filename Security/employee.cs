@@ -25,6 +25,7 @@ namespace Security
         public string surname { get; set; }
         public int balance { get; set; }
         public Nullable<bool> came { get; set; }
+        public string image { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<lateness> lateness { get; set; }

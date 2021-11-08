@@ -147,6 +147,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="img\artem.jpg" />
+    <Resource Include="img\genadiy.jpg" />
+    <Resource Include="img\kamila.jpg" />
+    <Resource Include="img\marina.jpg" />
     <Content Include="Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.Context.cs</LastGenOutput>
